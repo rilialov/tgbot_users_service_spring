@@ -1,0 +1,47 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://users_service.tgbot/web-service"
+           targetNamespace="http://users_service.tgbot/web-service" elementFormDefault="qualified">
+
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="firstName" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="tns:user"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="user">
+        <xs:sequence>
+            <xs:element name="chatID" type="xs:long"/>
+            <xs:element name="nickname" type="xs:string"/>
+            <xs:element name="firstName" type="xs:string"/>
+            <xs:element name="lastName" type="xs:string"/>
+            <xs:element name="team" type="tns:team"/>
+            <xs:element name="role" type="tns:role"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="team">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="teamName" type="xs:string"/>
+            <xs:element name="teamColor" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="role">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="STUDENT"/>
+            <xs:enumeration value="LEAD"/>
+            <xs:enumeration value="LECTURER"/>
+            <xs:enumeration value="ADMIN"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
