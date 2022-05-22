@@ -1,10 +1,18 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://users_service.tgbot/web-service"
            targetNamespace="http://users_service.tgbot/web-service" elementFormDefault="qualified">
 
-    <xs:element name="getUserRequest">
+Added    <xs:element name="getUserByIdRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="firstName" type="xs:string"/>
+                <xs:element name="chatId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getUserByNickRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nickname" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -12,23 +20,23 @@
     <xs:element name="getUserResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="tns:user"/>
+                <xs:element name="userDTO" type="tns:userDTO"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
-    <xs:complexType name="user">
+    <xs:complexType name="userDTO">
         <xs:sequence>
             <xs:element name="chatID" type="xs:long"/>
             <xs:element name="nickname" type="xs:string"/>
             <xs:element name="firstName" type="xs:string"/>
             <xs:element name="lastName" type="xs:string"/>
-            <xs:element name="team" type="tns:team"/>
+            <xs:element name="team" type="tns:teamDTO"/>
             <xs:element name="role" type="tns:role"/>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="team">
+    <xs:complexType name="teamDTO">
         <xs:sequence>
             <xs:element name="id" type="xs:long"/>
             <xs:element name="teamName" type="xs:string"/>
