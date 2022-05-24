@@ -2,8 +2,8 @@ package tgbot.users_service.converters;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tgbot.users.service.TeamDTO;
 import tgbot.users_service.entity.Team;
-import tgbot.users_service.web_service.TeamDTO;
 
 import java.util.ArrayList;
 import java.util.List;

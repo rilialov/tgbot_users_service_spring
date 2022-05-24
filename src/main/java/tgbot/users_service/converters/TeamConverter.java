@@ -2,9 +2,8 @@ package tgbot.users_service.converters;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import tgbot.users.service.TeamDTO;
 import tgbot.users_service.entity.Team;
-import tgbot.users_service.web_service.TeamDTO;
-
 
 import java.util.List;
 

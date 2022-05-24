@@ -1,7 +1,7 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://users_service.tgbot/web-service"
-           targetNamespace="http://users_service.tgbot/web-service" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://users.tgbot/service"
+           targetNamespace="http://users.tgbot/service" elementFormDefault="qualified">
 
-Added    <xs:element name="getUserByIdRequest">
+    <xs:element name="getUserByIdRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="chatId" type="xs:long"/>
