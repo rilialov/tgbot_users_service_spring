@@ -5,6 +5,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import tgbot.users.service.GetUserByIdRequest;
+import tgbot.users.service.GetUserByNickRequest;
 import tgbot.users.service.GetUserResponse;
 import tgbot.users_service.converters.UserConverter;
 import tgbot.users_service.entity.User;
@@ -26,10 +27,20 @@ public class UserEndpoint {
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByIdRequest")
     @ResponsePayload
-    public GetUserResponse getUser(@RequestPayload GetUserByIdRequest request) {
+    public GetUserResponse getUserById(@RequestPayload GetUserByIdRequest request) {
         GetUserResponse response = new GetUserResponse();
 
         Optional<User> optional = userRepository.findById(request.getChatId());
+        optional.ifPresent(user -> response.setUserDTO(userConverter.userToUserDTO(user)));
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByNickRequest")
+    @ResponsePayload
+    public GetUserResponse getUserByNickname(@RequestPayload GetUserByNickRequest request) {
+        GetUserResponse response = new GetUserResponse();
+
+        Optional<User> optional = userRepository.findByNickname(request.getNickname());
         optional.ifPresent(user -> response.setUserDTO(userConverter.userToUserDTO(user)));
         return response;
     }

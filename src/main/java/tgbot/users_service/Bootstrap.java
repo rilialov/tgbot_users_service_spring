@@ -7,6 +7,8 @@ import tgbot.users_service.entity.User;
 import tgbot.users_service.repository.TeamRepository;
 import tgbot.users_service.repository.UserRepository;
 
+import java.util.Optional;
+
 @Component
 public class Bootstrap implements CommandLineRunner {
 
@@ -21,15 +23,17 @@ public class Bootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Iterable<Team> teams = teamRepository.findAll();
-        for (Team team : teams) {
-            System.out.println(team.getTeamName());
-        }
-
-        Iterable<User> users = userRepository.findAll();
-        for (User user : users) {
-            System.out.println(user.getFirstName());
-        }
+//        Optional<User> user = userRepository.findByNickname("magna");
+//        System.out.println(user.get().getFirstName());
+//        Iterable<Team> teams = teamRepository.findAll();
+//        for (Team team : teams) {
+//            System.out.println(team.getTeamName());
+//        }
+//
+//        Iterable<User> users = userRepository.findAll();
+//        for (User user : users) {
+//            System.out.println(user.getFirstName());
+//        }
 
     }
 }
