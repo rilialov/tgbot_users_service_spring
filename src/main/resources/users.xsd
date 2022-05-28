@@ -17,14 +17,22 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="getUsersRequest">
+    <xs:element name="getAllUsersRequest">
         <xs:complexType/>
     </xs:element>
 
-    <xs:element name="getUsersResponse">
+    <xs:element name="updateUserRequest">
         <xs:complexType>
-            <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="usersList" type="tns:userDTO"/>
+            <xs:sequence>
+                <xs:element name="userDTO" type="tns:userDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteUserByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="chatId" type="xs:long"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -33,6 +41,22 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userDTO" type="tns:userDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllUsersResponse">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="usersList" type="tns:userDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getBooleanResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="deleted" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

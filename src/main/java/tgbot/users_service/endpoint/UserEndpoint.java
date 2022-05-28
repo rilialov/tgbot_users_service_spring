@@ -46,10 +46,10 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUsersRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllUsersRequest")
     @ResponsePayload
-    public GetUsersResponse getUsers(@RequestPayload GetUsersRequest request) {
-        GetUsersResponse response = new GetUsersResponse();
+    public GetAllUsersResponse getAllUsers(@RequestPayload GetAllUsersRequest request) {
+        GetAllUsersResponse response = new GetAllUsersResponse();
 
         Iterable<User> iterable = userRepository.findAll();
         List<User> userList =
@@ -60,4 +60,24 @@ public class UserEndpoint {
         return response;
     }
 
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateUserRequest")
+    @ResponsePayload
+    public GetUserResponse updateUser(@RequestPayload UpdateUserRequest request) {
+        GetUserResponse response = new GetUserResponse();
+
+        User dtoToUser = userConverter.userDTOToUser(request.getUserDTO());
+        User saved = userRepository.save(dtoToUser);
+        response.setUserDTO(userConverter.userToUserDTO(saved));
+        return response;
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUserByIdRequest")
+    @ResponsePayload
+    public GetBooleanResponse deleteUserById(@RequestPayload DeleteUserByIdRequest request) {
+        GetBooleanResponse response = new GetBooleanResponse();
+
+        userRepository.deleteById(request.getChatId());
+        response.setDeleted(true);
+        return response;
+    }
 }
