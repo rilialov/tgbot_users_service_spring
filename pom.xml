@@ -64,6 +64,12 @@
             <artifactId>modelmapper</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.andromda.thirdparty.jaxb2_commons</groupId>
+            <artifactId>collection-setter-injector</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -86,6 +92,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <arguments>-Xcollection-setter-injector</arguments>
+                    <clearOutputDir>false</clearOutputDir>
+                    <extension>true</extension>
                     <sources>
                         <source>${project.basedir}/src/main/resources/users.xsd</source>
                     </sources>

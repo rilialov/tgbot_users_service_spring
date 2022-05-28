@@ -17,6 +17,18 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="getUsersRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getUsersResponse">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="usersList" type="tns:userDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="getUserResponse">
         <xs:complexType>
             <xs:sequence>
