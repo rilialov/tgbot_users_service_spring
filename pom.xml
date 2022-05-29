@@ -100,6 +100,20 @@
                     </sources>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>8.5.7</version>
+                <configuration>
+                    <user>tgbot_u_admin</user>
+                    <password>password</password>
+                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <schemas>
+                        <schema>tgbot_users</schema>
+                    </schemas>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
