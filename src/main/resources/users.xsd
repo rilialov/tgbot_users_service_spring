@@ -21,7 +21,7 @@
         <xs:complexType/>
     </xs:element>
 
-    <xs:element name="updateUserRequest">
+    <xs:element name="saveUserRequest">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="userDTO" type="tns:userDTO"/>
@@ -57,6 +57,50 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="deleted" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getTeamByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllTeamsRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="saveTeamRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="teamDTO" type="tns:teamDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteTeamByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getTeamResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="teamDTO" type="tns:teamDTO"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllTeamsResponse">
+        <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="teamsList" type="tns:teamDTO"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

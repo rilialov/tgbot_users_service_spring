@@ -60,9 +60,9 @@ public class UserEndpoint {
         return response;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateUserRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "saveUserRequest")
     @ResponsePayload
-    public GetUserResponse updateUser(@RequestPayload UpdateUserRequest request) {
+    public GetUserResponse saveUser(@RequestPayload SaveUserRequest request) {
         GetUserResponse response = new GetUserResponse();
 
         User dtoToUser = userConverter.userDTOToUser(request.getUserDTO());
