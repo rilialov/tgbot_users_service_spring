@@ -1,7 +1,6 @@
 package tgbot.users_service.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "teams")
@@ -16,14 +15,14 @@ public class Team {
     private String teamName;
 
     @Column(name = "color", nullable = false)
-    private String color;
+    private String teamColor;
 
     public Team() {
     }
 
-    public Team(String teamName, String color) {
+    public Team(String teamName, String teamColor) {
         this.teamName = teamName;
-        this.color = color;
+        this.teamColor = teamColor;
     }
 
     public long getId() {
@@ -42,25 +41,32 @@ public class Team {
         this.teamName = teamName;
     }
 
-    public String getColor() {
-        return color;
+    public String getTeamColor() {
+        return teamColor;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setTeamColor(String teamColor) {
+        this.teamColor = teamColor;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Team team = (Team) o;
-        return id == team.id && teamName.equals(team.teamName) && color.equals(team.color);
+
+        if (id != team.id) return false;
+        if (!teamName.equals(team.teamName)) return false;
+        return teamColor.equals(team.teamColor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, teamName, color);
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + teamName.hashCode();
+        result = 31 * result + teamColor.hashCode();
+        return result;
     }
 
     @Override

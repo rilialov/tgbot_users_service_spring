@@ -1,12 +1,13 @@
 package tgbot.users_service.endpoint;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import tgbot.users.service.*;
-import tgbot.users_service.converters.UserConverter;
 import tgbot.users_service.entity.User;
+import tgbot.users_service.mappers.UserMapper;
 import tgbot.users_service.repository.UserRepository;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class UserEndpoint {
     private static final String NAMESPACE_URI = "http://users.tgbot/service";
 
     private final UserRepository userRepository;
-    private final UserConverter userConverter = new UserConverter();
+
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     public UserEndpoint(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -32,7 +34,7 @@ public class UserEndpoint {
         GetUserResponse response = new GetUserResponse();
 
         Optional<User> optional = userRepository.findById(request.getChatId());
-        optional.ifPresent(user -> response.setUserDTO(userConverter.userToUserDTO(user)));
+        optional.ifPresent(user -> response.setUserDTO(userMapper.userToUserDTO(user)));
         return response;
     }
 
@@ -42,7 +44,7 @@ public class UserEndpoint {
         GetUserResponse response = new GetUserResponse();
 
         Optional<User> optional = userRepository.findByNickname(request.getNickname());
-        optional.ifPresent(user -> response.setUserDTO(userConverter.userToUserDTO(user)));
+        optional.ifPresent(user -> response.setUserDTO(userMapper.userToUserDTO(user)));
         return response;
     }
 
@@ -55,7 +57,7 @@ public class UserEndpoint {
         List<User> userList =
                 StreamSupport.stream(iterable.spliterator(), false)
                         .collect(Collectors.toList());
-        List<UserDTO> userDTOList = userConverter.userListToDTOUserList(userList);
+        List<UserDTO> userDTOList = userMapper.userListToDTOUserList(userList);
         response.setUsersList(userDTOList);
         return response;
     }
@@ -65,9 +67,9 @@ public class UserEndpoint {
     public GetUserResponse saveUser(@RequestPayload SaveUserRequest request) {
         GetUserResponse response = new GetUserResponse();
 
-        User dtoToUser = userConverter.userDTOToUser(request.getUserDTO());
+        User dtoToUser = userMapper.userDTOToUser(request.getUserDTO());
         User saved = userRepository.save(dtoToUser);
-        response.setUserDTO(userConverter.userToUserDTO(saved));
+        response.setUserDTO(userMapper.userToUserDTO(saved));
         return response;
     }
 

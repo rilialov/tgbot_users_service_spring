@@ -25,7 +25,7 @@ class TeamRepositoryIT {
         Optional<Team> optional = teamRepository.findById(1L);
 
         assertTrue(optional.isPresent());
-        assertEquals("Grey", optional.get().getColor());
+        assertEquals("Grey", optional.get().getTeamColor());
     }
 
     @Test
@@ -46,7 +46,7 @@ class TeamRepositoryIT {
 
         Optional<Team> optional = teamRepository.findById(saved.getId());
         assertTrue(optional.isPresent());
-        assertEquals("Test team color", optional.get().getColor());
+        assertEquals("Test team color", optional.get().getTeamColor());
     }
 
     @Test
@@ -55,12 +55,12 @@ class TeamRepositoryIT {
 
         assertTrue(optional.isPresent());
         Team team = optional.get();
-        team.setColor("Violet");
+        team.setTeamColor("Violet");
         teamRepository.save(team);
 
         Optional<Team> changed = teamRepository.findById(1L);
         assertTrue(changed.isPresent());
-        assertEquals("Violet", changed.get().getColor());
+        assertEquals("Violet", changed.get().getTeamColor());
     }
 
     @Test

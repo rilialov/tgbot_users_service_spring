@@ -1,7 +1,7 @@
-package tgbot.users_service.converters;
+package tgbot.users_service.mappers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import tgbot.users.service.UserDTO;
 import tgbot.users_service.entity.User;
 
@@ -10,22 +10,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserConverterTest {
-    private UserConverter userConverter;
+class UserMapperTest {
 
-    @BeforeEach
-    void init() {
-        userConverter = new UserConverter();
-    }
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
     @Test
     void userToUserDTO() {
         User user = new User(20, "First Name");
 
-        UserDTO userDTO = userConverter.userToUserDTO(user);
+        UserDTO userDTO = userMapper.userToUserDTO(user);
 
-        assertEquals(20, userDTO.getChatID());
-        assertEquals("First Name", userDTO.getFirstName());
+        assertEquals(user.getChatId(), userDTO.getChatID());
+        assertEquals(user.getFirstName(), userDTO.getFirstName());
     }
 
     @Test
@@ -34,10 +30,10 @@ class UserConverterTest {
         userDTO.setChatID(20);
         userDTO.setFirstName("First Name");
 
-        User user = userConverter.userDTOToUser(userDTO);
+        User user = userMapper.userDTOToUser(userDTO);
 
-        assertEquals(20, user.getChatId());
-        assertEquals("First Name", user.getFirstName());
+        assertEquals(userDTO.getChatID(), user.getChatId());
+        assertEquals(userDTO.getFirstName(), user.getFirstName());
     }
 
     @Test
@@ -46,9 +42,9 @@ class UserConverterTest {
         User user = new User(20, "First Name");
         list.add(user);
 
-        List<UserDTO> dtoList = userConverter.userListToDTOUserList(list);
+        List<UserDTO> dtoList = userMapper.userListToDTOUserList(list);
 
-        assertEquals("First Name", dtoList.get(0).getFirstName());
+        assertEquals(list.get(0).getFirstName(), dtoList.get(0).getFirstName());
     }
 
     @Test
@@ -59,9 +55,8 @@ class UserConverterTest {
         userDTO.setFirstName("First Name");
         dtoList.add(userDTO);
 
-        List<User> list = userConverter.userListDTOToUserList(dtoList);
+        List<User> list = userMapper.userListDTOToUserList(dtoList);
 
-        assertEquals("First Name", list.get(0).getFirstName());
+        assertEquals(dtoList.get(0).getFirstName(), list.get(0).getFirstName());
     }
-
 }

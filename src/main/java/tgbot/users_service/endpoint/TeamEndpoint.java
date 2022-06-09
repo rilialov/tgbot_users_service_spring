@@ -1,12 +1,13 @@
 package tgbot.users_service.endpoint;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import tgbot.users.service.*;
-import tgbot.users_service.converters.TeamConverter;
 import tgbot.users_service.entity.Team;
+import tgbot.users_service.mappers.TeamMapper;
 import tgbot.users_service.repository.TeamRepository;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class TeamEndpoint {
 
     private final TeamRepository teamRepository;
 
-    private final TeamConverter teamConverter = new TeamConverter();
+    private final TeamMapper teamMapper = Mappers.getMapper(TeamMapper.class);
 
     public TeamEndpoint(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
@@ -33,7 +34,7 @@ public class TeamEndpoint {
         GetTeamResponse response = new GetTeamResponse();
 
         Optional<Team> optional = teamRepository.findById(request.getId());
-        optional.ifPresent(team -> response.setTeamDTO(teamConverter.teamToTeamDTO(team)));
+        optional.ifPresent(team -> response.setTeamDTO(teamMapper.teamToTeamDTO(team)));
         return response;
     }
 
@@ -45,7 +46,7 @@ public class TeamEndpoint {
         Iterable<Team> iterable = teamRepository.findAll();
         List<Team> teamList = StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
-        List<TeamDTO> teamDTOList = teamConverter.teamListToDTOTeamList(teamList);
+        List<TeamDTO> teamDTOList = teamMapper.teamListToDTOTeamList(teamList);
         response.setTeamsList(teamDTOList);
         return response;
     }
@@ -55,9 +56,9 @@ public class TeamEndpoint {
     public GetTeamResponse saveTeam(@RequestPayload SaveTeamRequest request) {
         GetTeamResponse response = new GetTeamResponse();
 
-        Team dtoToTeam = teamConverter.teamDTOToTeam(request.getTeamDTO());
+        Team dtoToTeam = teamMapper.teamDTOToTeam(request.getTeamDTO());
         Team saved = teamRepository.save(dtoToTeam);
-        response.setTeamDTO(teamConverter.teamToTeamDTO(saved));
+        response.setTeamDTO(teamMapper.teamToTeamDTO(saved));
         return response;
     }
 

@@ -1,7 +1,6 @@
 package tgbot.users_service.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -88,13 +87,18 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         User user = (User) o;
-        return chatId == user.chatId && Objects.equals(nickname, user.nickname) && firstName.equals(user.firstName) && Objects.equals(lastName, user.lastName);
+
+        if (chatId != user.chatId) return false;
+        return firstName.equals(user.firstName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(chatId, nickname, firstName, lastName);
+        int result = (int) (chatId ^ (chatId >>> 32));
+        result = 31 * result + firstName.hashCode();
+        return result;
     }
 
     @Override
