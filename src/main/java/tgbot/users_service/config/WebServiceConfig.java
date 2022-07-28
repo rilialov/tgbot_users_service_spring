@@ -1,4 +1,4 @@
-package tgbot.users_service.service;
+package tgbot.users_service.config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
