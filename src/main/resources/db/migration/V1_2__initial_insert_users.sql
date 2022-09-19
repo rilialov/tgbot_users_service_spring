@@ -7,7 +7,7 @@ VALUES
     (5, 'semeget', 'Natalie', 'Wallace', 2, 'STUDENT'),
     (6, 'vitae', 'Cody', 'Lara', 2, 'STUDENT'),
     (7, 'varius', 'Quynn', 'Lang', 2, 'STUDENT'),
-    (8, 'nonummy', 'Sylvia', 'Byers', 2, 'LEAD'),
-    (9, 'semper', 'Cody', 'Hoover', 2, 'STUDENT'),
-    (10, 'cras', 'Caleb', 'Rojas', 2, 'STUDENT'),
-    (11, 'imperdiet', 'Zane', 'Baxter', 2, 'STUDENT');
+    (8, 'nonummy', 'Sylvia', 'Byers', 3, 'LEAD'),
+    (9, 'semper', 'Cody', 'Hoover', 3, 'STUDENT'),
+    (10, 'cras', 'Caleb', 'Rojas', 3, 'STUDENT'),
+    (11, 'imperdiet', 'Zane', 'Baxter', 3, 'STUDENT');
