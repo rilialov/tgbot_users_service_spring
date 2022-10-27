@@ -1,6 +1,8 @@
 package tgbot.users_service.endpoint;
 
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -9,11 +11,9 @@ import tgbot.users.service.*;
 import tgbot.users_service.entity.Team;
 import tgbot.users_service.mappers.TeamMapper;
 import tgbot.users_service.repository.TeamRepository;
+import tgbot.users_service.service.TeamsService;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Endpoint
 public class TeamEndpoint {
@@ -22,10 +22,13 @@ public class TeamEndpoint {
 
     private final TeamRepository teamRepository;
 
+    private final TeamsService teamsService;
+
     private final TeamMapper teamMapper = Mappers.getMapper(TeamMapper.class);
 
-    public TeamEndpoint(TeamRepository teamRepository) {
+    public TeamEndpoint(TeamRepository teamRepository, TeamsService teamsService) {
         this.teamRepository = teamRepository;
+        this.teamsService = teamsService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getTeamByIdRequest")
@@ -43,11 +46,10 @@ public class TeamEndpoint {
     public GetAllTeamsResponse getAllTeams(@RequestPayload GetAllTeamsRequest request) {
         GetAllTeamsResponse response = new GetAllTeamsResponse();
 
-        Iterable<Team> iterable = teamRepository.findAll();
-        List<Team> teamList = StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
-        List<TeamDTO> teamDTOList = teamMapper.teamListToDTOTeamList(teamList);
-        response.setTeamsList(teamDTOList);
+        Page<TeamDTO> paginated = teamsService.findPaginated(PageRequest.of(request.getPage() - 1, request.getSize()));
+
+        response.setTotalPages(paginated.getTotalPages());
+        response.setTeamsList(paginated.getContent());
         return response;
     }
 

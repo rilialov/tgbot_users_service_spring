@@ -18,7 +18,12 @@
     </xs:element>
 
     <xs:element name="getAllUsersRequest">
-        <xs:complexType/>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="page" type="xs:int"/>
+                <xs:element name="size" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
     </xs:element>
 
     <xs:element name="saveUserRequest">
@@ -47,8 +52,9 @@
 
     <xs:element name="getAllUsersResponse">
         <xs:complexType>
-            <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="usersList" type="tns:userDTO"/>
+            <xs:sequence>
+                <xs:element name="totalPages" type="xs:int"/>
+                <xs:element name="usersList" type="tns:userDTO" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -70,7 +76,12 @@
     </xs:element>
 
     <xs:element name="getAllTeamsRequest">
-        <xs:complexType/>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="page" type="xs:int"/>
+                <xs:element name="size" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
     </xs:element>
 
     <xs:element name="saveTeamRequest">
@@ -99,8 +110,9 @@
 
     <xs:element name="getAllTeamsResponse">
         <xs:complexType>
-            <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="teamsList" type="tns:teamDTO"/>
+            <xs:sequence>
+                <xs:element name="totalPages" type="xs:int"/>
+                <xs:element name="teamsList" type="tns:teamDTO" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
