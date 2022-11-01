@@ -1,6 +1,8 @@
 package tgbot.users_service.endpoint;
 
 import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -9,11 +11,9 @@ import tgbot.users.service.*;
 import tgbot.users_service.entity.User;
 import tgbot.users_service.mappers.UserMapper;
 import tgbot.users_service.repository.UserRepository;
+import tgbot.users_service.service.UsersService;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Endpoint
 public class UserEndpoint {
@@ -22,10 +22,13 @@ public class UserEndpoint {
 
     private final UserRepository userRepository;
 
+    private final UsersService usersService;
+
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
-    public UserEndpoint(UserRepository userRepository) {
+    public UserEndpoint(UserRepository userRepository, UsersService usersService) {
         this.userRepository = userRepository;
+        this.usersService = usersService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserByIdRequest")
@@ -53,12 +56,10 @@ public class UserEndpoint {
     public GetAllUsersResponse getAllUsers(@RequestPayload GetAllUsersRequest request) {
         GetAllUsersResponse response = new GetAllUsersResponse();
 
-        Iterable<User> iterable = userRepository.findAll();
-        List<User> userList =
-                StreamSupport.stream(iterable.spliterator(), false)
-                        .collect(Collectors.toList());
-        List<UserDTO> userDTOList = userMapper.userListToDTOUserList(userList);
-        response.setUsersList(userDTOList);
+        Page<UserDTO> paginated = usersService.findPaginated(PageRequest.of(request.getPage() - 1, request.getSize()));
+
+        response.setTotalPages(paginated.getTotalPages());
+        response.setUsersList(paginated.getContent());
         return response;
     }
 
